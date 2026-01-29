@@ -34,31 +34,24 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex flex-col overflow-hidden bg-[var(--bg-base)] transition-colors duration-500"
     >
-      {/* Mesh gradient background */}
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-        style={{
-          backgroundImage: `
-            radial-gradient(at 0% 0%, rgba(222, 106, 8, 0.15) 0, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(0, 0, 255, 0.1) 0, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(222, 106, 8, 0.05) 0, transparent 50%),
-            radial-gradient(at 0% 100%, rgba(0, 0, 255, 0.08) 0, transparent 50%)
-          `,
-        }}
-      />
+      {/* Ambient Background Layer */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        {/* Orange Pulse */}
+        <div className="absolute top-[20%] -left-20 w-80 h-80 bg-[#dd5608] rounded-full filter blur-[100px] opacity-60 mix-blend-screen animate-pulse" />
+        {/* Electric Blue Pulse */}
+        <div className="absolute top-[30%] -right-20 w-80 h-80 bg-[#0000FF] rounded-full filter blur-[100px] opacity-50 mix-blend-screen animate-pulse" />
+        {/* Bottom Fill */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-gradient-to-t from-[#dd5608]/10 to-transparent opacity-40" />
+      </div>
 
       {/* Grain overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20"
+        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20 mix-blend-overlay"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
         }}
       />
-
-      {/* Floating Decorative Elements */}
-      <div className="absolute top-1/4 left-10 w-24 h-24 rounded-full bg-[#0000FF]/10 blur-3xl" />
-      <div className="absolute bottom-1/4 right-10 w-32 h-32 rounded-full bg-[#dd5608]/10 blur-3xl" />
 
       {/* Header */}
       <header className="relative z-50 flex items-center justify-between p-6 bg-transparent">

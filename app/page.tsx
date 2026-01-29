@@ -10,7 +10,7 @@ export default function Home() {
       <main className="relative bg-white selection:bg-[#dd5608] selection:text-white">
         <Hero />
         <About />
-        <Projects />
+        {/* <Projects /> */}
         <Contact />
       </main>
     </SmoothScroll>

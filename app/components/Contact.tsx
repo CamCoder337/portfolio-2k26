@@ -82,7 +82,7 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="section min-h-screen flex flex-col justify-center bg-[var(--bg-base)]"
+      className="section min-h-screen flex flex-col justify-center bg-[var(--bg-base)] px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto w-full text-center">
         {/* Label */}
