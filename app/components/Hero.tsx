@@ -59,7 +59,7 @@ export default function Hero() {
       <header className="relative z-50 flex items-center justify-between p-6 bg-transparent">
         {/* Logo */}
         <div className="w-10 h-10 rounded-full bg-black overflow-hidden flex items-center justify-center">
-          <span className="text-white text-xs font-bold">CD</span>
+          <span className="text-white text-xs font-bold">CC</span>
         </div>
 
         {/* Status Badge + CTA */}
@@ -86,7 +86,7 @@ export default function Hero() {
       {/* Side text - Left */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 -rotate-90 origin-left hidden lg:block">
         <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-black/30">
-          Scroll to Explore — 2024 Portfolio
+          Scroll to Explore — 2026 Portfolio
         </p>
       </div>
 
