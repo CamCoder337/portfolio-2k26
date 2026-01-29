@@ -1,96 +1,102 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTheme } from "./ThemeProvider";
 
 const navItems = [
-  { id: "home", icon: "home", label: "Home" },
-  { id: "about", icon: "folder_open", label: "Work" },
-  { id: "projects", icon: "experiment", label: "Projects" },
-  { id: "contact", icon: "alternate_email", label: "Contact" },
+  { id: "home", icon: "home", label: "Home", href: "/" },
+  { id: "about", icon: "person", label: "About", href: "/about" },
+  { id: "projects", icon: "experiment", label: "Projects", href: "/projects" },
+  { id: "contact", icon: "alternate_email", label: "Contact", href: "/contact" },
 ];
 
 export default function NavigationDock() {
-  const [activeSection, setActiveSection] = useState("home");
-  const [isVisible, setIsVisible] = useState(true);
+  const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
-  const handleScroll = useCallback(() => {
-    const sections = navItems.map((item) => document.getElementById(item.id));
-    const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const section = sections[i];
-      if (section && section.offsetTop <= scrollPosition) {
-        setActiveSection(navItems[i].id);
-        break;
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
   };
 
   return (
     <nav
-      className={`fixed bottom-10 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-50 transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}
+      className="fixed bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-50"
       role="navigation"
       aria-label="Main navigation"
     >
-      <div
-        className="flex items-center justify-around p-3 rounded-full shadow-2xl"
-        style={{
-          background: "rgba(255, 255, 255, 0.7)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: "1px solid rgba(255, 255, 255, 0.3)",
-        }}
-      >
+      <div className="nav-dock-container flex items-center justify-around p-2 md:p-3 rounded-full shadow-2xl transition-colors duration-300 dark:bg-white/10 dark:border-white/10 bg-white/70 border border-white/30 backdrop-blur-xl">
         {navItems.map((item, index) => (
           <React.Fragment key={item.id}>
-            <button
-              onClick={() => scrollToSection(item.id)}
-              className={`flex items-center justify-center w-12 h-12 rounded-full transition-all ${activeSection === item.id
-                  ? "bg-[#dd5608] text-white shadow-lg"
-                  : "text-black/60 hover:text-black hover:bg-white/50"
-                }`}
-              style={{
-                boxShadow:
-                  activeSection === item.id
-                    ? "0 4px 12px rgba(221, 86, 8, 0.2)"
-                    : "none",
-              }}
+            <Link
+              href={item.href}
+              className={`flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full transition-all duration-300 ${
+                isActive(item.href)
+                  ? "bg-[#dd5608] text-white shadow-lg shadow-[#dd5608]/30"
+                  : "text-black/60 hover:text-black hover:bg-black/5 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10"
+              }`}
               aria-label={item.label}
-              aria-current={activeSection === item.id ? "page" : undefined}
+              aria-current={isActive(item.href) ? "page" : undefined}
             >
               <span
                 className="material-symbols-outlined"
                 style={{
-                  fontVariationSettings:
-                    activeSection === item.id
-                      ? "'FILL' 1, 'wght' 400"
-                      : "'FILL' 0, 'wght' 400",
-                  fontSize: "24px",
+                  fontVariationSettings: isActive(item.href)
+                    ? "'FILL' 1, 'wght' 400"
+                    : "'FILL' 0, 'wght' 400",
+                  fontSize: "22px",
                 }}
               >
                 {item.icon}
               </span>
-            </button>
+            </Link>
             {/* Divider before contact */}
             {index === 2 && (
-              <div className="h-6 w-px bg-black/10 mx-1" />
+              <div className="h-6 w-px bg-black/10 dark:bg-white/20 mx-1" />
             )}
           </React.Fragment>
         ))}
+
+        {/* Divider before theme toggle */}
+        <div className="h-6 w-px bg-black/10 dark:bg-white/20 mx-1" />
+
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="relative flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full transition-all duration-300 text-black/60 hover:text-black hover:bg-black/5 dark:text-white/60 dark:hover:text-white dark:hover:bg-white/10 overflow-hidden"
+          aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+        >
+          {/* Sun icon (shown in dark mode) */}
+          <span
+            className={`absolute material-symbols-outlined transition-all duration-500 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] ${
+              theme === "dark"
+                ? "opacity-100 rotate-0 scale-100"
+                : "opacity-0 rotate-90 scale-0"
+            }`}
+            style={{
+              fontVariationSettings: "'FILL' 1, 'wght' 400",
+              fontSize: "22px",
+            }}
+          >
+            light_mode
+          </span>
+          {/* Moon icon (shown in light mode) */}
+          <span
+            className={`absolute material-symbols-outlined transition-all duration-500 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] ${
+              theme === "light"
+                ? "opacity-100 rotate-0 scale-100"
+                : "opacity-0 -rotate-90 scale-0"
+            }`}
+            style={{
+              fontVariationSettings: "'FILL' 1, 'wght' 400",
+              fontSize: "22px",
+            }}
+          >
+            dark_mode
+          </span>
+        </button>
       </div>
     </nav>
   );

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./components/ThemeProvider";
+import NavigationDock from "./components/NavigationDock";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -77,7 +79,12 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ThemeProvider>
+          {children}
+          <NavigationDock />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 export default function Hero() {
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -31,20 +32,24 @@ export default function Hero() {
     <section
       ref={heroRef}
       id="home"
-      className="relative min-h-screen flex flex-col overflow-hidden"
-      style={{
-        backgroundColor: "#fff",
-        backgroundImage: `
-          radial-gradient(at 0% 0%, rgba(222, 106, 8, 0.15) 0, transparent 50%),
-          radial-gradient(at 100% 100%, rgba(0, 0, 255, 0.1) 0, transparent 50%),
-          radial-gradient(at 100% 0%, rgba(222, 106, 8, 0.05) 0, transparent 50%),
-          radial-gradient(at 0% 100%, rgba(0, 0, 255, 0.08) 0, transparent 50%)
-        `,
-      }}
+      className="relative min-h-screen flex flex-col overflow-hidden bg-[var(--bg-base)] transition-colors duration-500"
     >
+      {/* Mesh gradient background */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+        style={{
+          backgroundImage: `
+            radial-gradient(at 0% 0%, rgba(222, 106, 8, 0.15) 0, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(0, 0, 255, 0.1) 0, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(222, 106, 8, 0.05) 0, transparent 50%),
+            radial-gradient(at 0% 100%, rgba(0, 0, 255, 0.08) 0, transparent 50%)
+          `,
+        }}
+      />
+
       {/* Grain overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-40"
+        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
@@ -58,15 +63,33 @@ export default function Hero() {
       {/* Header */}
       <header className="relative z-50 flex items-center justify-between p-6 bg-transparent">
         {/* Logo */}
-        <div className="w-10 h-10 rounded-full bg-black overflow-hidden flex items-center justify-center">
-          <span className="text-white text-xs font-bold">CC</span>
+        <div
+          className="h-10 rounded-full bg-[var(--text-primary)] flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] overflow-hidden cursor-pointer hover:scale-105"
+          style={{ width: isLogoHovered ? "110px" : "40px" }}
+          onMouseEnter={() => setIsLogoHovered(true)}
+          onMouseLeave={() => setIsLogoHovered(false)}
+        >
+          <div className="relative w-full h-full flex items-center justify-center">
+            <span
+              className={`absolute text-[var(--text-inverse)] text-xs font-bold transition-all duration-300 ${isLogoHovered ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
+                }`}
+            >
+              CC
+            </span>
+            <span
+              className={`absolute text-[var(--text-inverse)] text-xs font-bold transition-all duration-300 ${isLogoHovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                }`}
+            >
+              CamCoder
+            </span>
+          </div>
         </div>
 
         {/* Status Badge + CTA */}
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#dd5608]" />
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-black/40">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[var(--text-muted)] transition-colors duration-500">
               Available for freelance
             </span>
           </div>
@@ -85,14 +108,14 @@ export default function Hero() {
 
       {/* Side text - Left */}
       <div className="absolute left-6 top-1/2 -translate-y-1/2 -rotate-90 origin-left hidden lg:block">
-        <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-black/30">
+        <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[var(--text-muted)] transition-colors duration-500">
           Scroll to Explore — 2026 Portfolio
         </p>
       </div>
 
       {/* Side text - Right */}
       <div className="absolute right-6 top-1/2 -translate-y-1/2 rotate-90 origin-right hidden lg:block">
-        <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-black/30">
+        <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[var(--text-muted)] transition-colors duration-500">
           Creative Software Engineer
         </p>
       </div>
@@ -108,7 +131,7 @@ export default function Hero() {
               letterSpacing: "-0.05em",
             }}
           >
-            <span className="title-line block text-[#181311] text-[72px] sm:text-[120px] font-bold">
+            <span className="title-line block text-[var(--text-primary)] text-[72px] sm:text-[120px] font-bold transition-colors duration-500">
               CREATIVE
             </span>
             <span className="title-line block text-[#dd5608] text-[72px] sm:text-[120px] font-bold italic">
@@ -119,7 +142,7 @@ export default function Hero() {
           <div className="mt-8 max-w-[280px]">
             <p
               ref={subtitleRef}
-              className="text-[#181311] text-sm font-medium leading-relaxed text-center opacity-80"
+              className="text-[var(--text-body)] text-sm font-medium leading-relaxed text-center transition-colors duration-500"
             >
               Crafting high-end digital experiences through code, motion, and
               kinetic typography.
