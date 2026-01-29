@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(vercel-react-best-practices)",
+      "Skill(frontend-design)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm dev)",
+      "Bash(pnpm add:*)"
+    ]
+  }
+}
