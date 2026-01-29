@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const socialLinks = [
   {
     name: "GitHub",
-    url: "https://github.com",
+    url: "https://github.com/camcoder337",
     icon: (
       <svg
         width="24"
@@ -23,7 +23,7 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com",
+    url: "https://www.linkedin.com/in/fred-tchiadeu-67a97a24b/",
     icon: (
       <svg
         width="24"
@@ -37,7 +37,7 @@ const socialLinks = [
   },
   {
     name: "X",
-    url: "https://x.com",
+    url: "https://x.com/camcoder337",
     icon: (
       <svg
         width="24"
@@ -94,12 +94,11 @@ export default function Contact() {
           className=""
         >
           <a
-            href="mailto:hello@creativedev.io"
-            className={`kinetic-display block transition-all duration-500 ${
-              isHovered
-                ? "text-[var(--primary)]"
-                : "text-[var(--text-primary)]"
-            }`}
+            href="mailto:camcoder337@gmail.com"
+            className={`kinetic-display block transition-all duration-500 ${isHovered
+              ? "text-[var(--primary)]"
+              : "text-[var(--text-primary)]"
+              }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{
@@ -112,14 +111,13 @@ export default function Contact() {
 
         {/* Email */}
         <a
-          href="mailto:hello@creativedev.io"
-          className={`inline-block mt-6 body-lg transition-colors duration-300 ${
-            isHovered
-              ? "text-[var(--primary)]"
-              : "text-[var(--text-muted)]"
-          }`}
+          href="mailto:camcoder337@gmail.com"
+          className={`inline-block mt-6 body-lg transition-colors duration-300 ${isHovered
+            ? "text-[var(--primary)]"
+            : "text-[var(--text-muted)]"
+            }`}
         >
-          hello@creativedev.io
+          <span className="text-[var(--primary)]">camcoder337@gmail.com</span>
         </a>
 
         {/* Social Links */}
