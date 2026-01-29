@@ -5,7 +5,10 @@
       "Skill(frontend-design)",
       "Bash(pnpm build:*)",
       "Bash(pnpm dev)",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "Bash(dir /s /b \"C:\\\\Users\\\\pc\\\\Documents\\\\web-projects\\\\portfolio\\\\app\\\\*.tsx\")",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pc\\\\Documents\\\\web-projects\\\\portfolio\\\\app\" -Recurse -Filter \"*.tsx\")",
+      "Bash(Select-Object -ExpandProperty FullName)"
     ]
   }
 }
