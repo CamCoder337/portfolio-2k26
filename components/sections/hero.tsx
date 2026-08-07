@@ -106,7 +106,7 @@ export function Hero() {
           image is fitted to the container height and centred, leaving the
           stone background exposed either side. object-cover would crop and
           zoom it. Narrow screens still cover, or it would letterbox. */}
-      <div className="hero-backdrop absolute inset-x-0 -top-[10%] h-[120%]">
+      <div className="hero-backdrop absolute inset-x-0 -top-[11.5%] h-[126.5%]">
         <Media
           src="/media/home/hero.jpg"
           alt=""
