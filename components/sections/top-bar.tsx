@@ -4,6 +4,7 @@ import { navLinks, site } from "@/lib/site";
 import { UnderlineLink } from "@/components/ui/buttons";
 import { Magnetic } from "@/components/ui/magnetic";
 import { TransitionLink } from "@/components/ui/transition-link";
+import { useMenu } from "@/components/providers/menu";
 
 /**
  * Credit and inline nav sitting on top of a page header.
@@ -17,6 +18,8 @@ import { TransitionLink } from "@/components/ui/transition-link";
  *    the hero backdrop, without needing one.
  */
 export function TopBar() {
+  const { open, toggle } = useMenu();
+
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0">
       <div className="shell flex items-start justify-between py-8 text-body text-paper mix-blend-difference">
@@ -26,7 +29,9 @@ export function TopBar() {
             className="group pointer-events-auto flex items-baseline gap-2 whitespace-nowrap"
           >
             <span className="text-[0.7em]">©</span>
-            <span>Code by {site.name.split(" ")[0]}</span>
+            <span>
+              {site.name.split(" ")[0]}
+            </span>
             {/* Surname slides out from behind the first name on hover. */}
             <span className="inline-block max-w-0 overflow-hidden transition-[max-width] duration-500 ease-[var(--ease-out-expo)] group-hover:max-w-[9ch]">
               {site.name.split(" ")[1]}
@@ -41,6 +46,18 @@ export function TopBar() {
             </UnderlineLink>
           ))}
         </nav>
+
+        {/* Below md the reference swaps the inline links for a single "Menu"
+            trigger; the round burger only turns up once you have scrolled. */}
+        <button
+          type="button"
+          onClick={toggle}
+          aria-expanded={open}
+          className="pointer-events-auto flex items-center gap-2 md:hidden"
+        >
+          <span className="inline-block size-1.5 rounded-full bg-current" />
+          {open ? "Close" : "Menu"}
+        </button>
       </div>
     </div>
   );

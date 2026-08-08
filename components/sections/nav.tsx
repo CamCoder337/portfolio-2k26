@@ -10,9 +10,12 @@ import { Magnetic } from "@/components/ui/magnetic";
 import { ArrowUpRight } from "@/components/ui/icons";
 import { TransitionLink } from "@/components/ui/transition-link";
 import { lenisStore } from "@/lib/lenis-store";
+import { useMenu } from "@/components/providers/menu";
 
 export function Nav() {
-  const [open, setOpen] = useState(false);
+  /* Shared with the top bar's "Menu" button, which replaces the inline links
+     on small screens. */
+  const { open, toggle, close } = useMenu();
   const [scrolled, setScrolled] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
@@ -57,7 +60,6 @@ export function Nav() {
 
   /* Panel links close the menu themselves; back/forward has to be caught here. */
   useEffect(() => {
-    const close = () => setOpen(false);
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
     };
@@ -67,7 +69,7 @@ export function Nav() {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("popstate", close);
     };
-  }, []);
+  }, [close]);
 
   /* The burger only exists once the header has been scrolled past. */
   useEffect(() => {
@@ -97,7 +99,7 @@ export function Nav() {
         <Magnetic strength={40}>
           <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
+            onClick={toggle}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             className="group relative isolate grid size-[4.4rem] place-items-center overflow-hidden rounded-full bg-ink text-paper"
@@ -139,7 +141,7 @@ export function Nav() {
         type="button"
         tabIndex={open ? 0 : -1}
         aria-label="Close menu"
-        onClick={() => setOpen(false)}
+        onClick={close}
         className={`nav-backdrop fixed inset-0 z-[95] bg-ink/40 ${
           open ? "" : "pointer-events-none"
         }`}
@@ -170,7 +172,7 @@ export function Nav() {
                   <li key={link.href} className="nav-reveal">
                     <TransitionLink
                       href={link.href}
-                      onClick={() => setOpen(false)}
+                      onClick={close}
                       className="group flex items-center gap-4 py-1 text-[clamp(2rem,2.9vw,2.9rem)] leading-[1.25]"
                     >
                       <span

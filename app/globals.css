@@ -15,9 +15,9 @@
   --color-paper-alt: #e9eaeb;
   --color-sand: #e0d9d1;
 
-  --color-accent: #455ce9;
-  --color-accent-deep: #334bd3;
-  --color-accent-light: #5a59d7;
+  --color-accent: #e98745;
+  --color-accent-deep: #d37033;
+  --color-accent-light: #d78559;
 
   --color-muted: #999d9e;
   --color-hair: rgba(28, 29, 32, 0.18);
@@ -35,12 +35,14 @@
   --text-lead: 1.55rem;
   --text-lead--line-height: 1.45;
 
-  /* Sized in vw to match the reference, which scales purely with the
-     viewport: h1 15vw, footer h2 6.1vw, work rows 5.25vw. */
-  --text-display: clamp(3.25rem, 15vw, 15rem);
+  /* Sized in vw to match the reference: h1 15vw, footer h2 6.1vw, work rows
+     5.25vw at desktop. The floors are the reference's own small-screen sizes
+     (144px and 45.5px at 390px wide) — a vw-only scale collapsed the h1 to
+     58px on a phone where the reference still shows 144px. */
+  --text-display: clamp(9rem, 15vw, 15rem);
   --text-display--line-height: 1;
 
-  --text-title: clamp(2.25rem, 6.1vw, 6.1rem);
+  --text-title: clamp(2.84rem, 6.1vw, 6.1rem);
   --text-title--line-height: 1.065;
 
   --text-item: clamp(2rem, 5.25vw, 5.25rem);

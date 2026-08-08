@@ -1,12 +1,12 @@
 export const site = {
-  name: "Dennis Snellenberg",
-  role: "Freelance Designer & Developer",
-  location: "Located in the Netherlands",
-  email: "info@dennissnellenberg.com",
-  phone: "+31 6 27 84 74 30",
-  phoneHref: "tel:+31627847430",
-  edition: "2022 © Edition",
-  timezone: "Europe/Amsterdam",
+  name: "Fred Tchiadeu",
+  role: "Freelance Software & QA Engineer",
+  location: "Located in the Cameroon",
+  email: "fredtchiadeu@gmail.com",
+  phone: "+237 693 926 443",
+  phoneHref: "tel:+237693926443",
+  edition: "2026 © Edition",
+  timezone: "Africa/Douala",
 } as const;
 
 export const navLinks = [
@@ -17,17 +17,17 @@ export const navLinks = [
 ] as const;
 
 export const socialLinks = [
-  { label: "Awwwards", href: "https://www.awwwards.com/dennissnellenberg/" },
-  { label: "Instagram", href: "https://www.instagram.com/codebydennis/" },
-  { label: "Twitter", href: "https://twitter.com/codebydennis" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/dennissnellenberg/" },
+  // { label: "Awwwards", href: "https://www.awwwards.com/dennissnellenberg/" },
+  { label: "Instagram", href: "https://www.instagram.com/camcoder337/" },
+  { label: "Twitter", href: "https://twitter.com/camcoder337" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/fredtchiadeu/" },
 ] as const;
 
 export const business = [
-  { label: "Dennis Snellenberg B.V." },
-  { label: "CoC: 92411711" },
-  { label: "VAT: NL866034080B01" },
-  { label: "Location: The Netherlands" },
+  { label: "CamCoder Studio" },
+  // { label: "CoC: 92411711" },
+  // { label: "VAT: NL866034080B01" },
+  { label: "Location: Cameroon" },
 ] as const;
 
 /* ------------------------------------------------------------------ */

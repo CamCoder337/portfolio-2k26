@@ -44,7 +44,9 @@ export function Showcase() {
     >
       <div className="flex flex-col gap-4 md:gap-6">
         <Row items={showcase.rowOne} className="showcase-row-1" />
-        <Row items={showcase.rowTwo} className="showcase-row-2" />
+        {/* The reference keeps four tiles in the first row on a phone but only
+            two in the second; four apiece leaves 100px slivers. */}
+        <Row items={showcase.rowTwo} className="showcase-row-2" mobileCount={2} />
       </div>
     </section>
   );
@@ -53,18 +55,27 @@ export function Showcase() {
 function Row({
   items,
   className,
+  mobileCount = items.length,
 }: {
   items: ShowcaseItem[];
   className: string;
+  /** How many tiles survive below md; the rest are dropped. */
+  mobileCount?: number;
 }) {
   return (
     <div className={`flex w-[116%] -translate-x-[8%] gap-4 md:gap-6 ${className}`}>
-      {items.map((item) => (
+      {items.map((item, i) => (
         <div
           key={item.src}
-          className="relative aspect-[4/3] flex-1 overflow-hidden bg-paper-mute"
+          className={`relative aspect-[4/3] flex-1 overflow-hidden bg-paper-mute ${
+            i >= mobileCount ? "hidden md:block" : ""
+          }`}
         >
-          <Media src={item.src} video={item.video} sizes="25vw" />
+          <Media
+            src={item.src}
+            video={item.video}
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
         </div>
       ))}
     </div>

@@ -116,29 +116,31 @@ export function Hero() {
         />
       </div>
 
-      {/* Location plaque: flush to the left edge, roughly at mid height */}
-      <div className="hero-enter absolute top-[44%] left-0">
-        <div className="relative flex h-[6.5rem] w-[16rem] items-center rounded-r-full bg-ink pl-11">
-          <p className="text-[1.08rem] leading-[1.2] text-paper">
+      {/* Location plaque. Below md the reference drops the plaque entirely and
+          keeps only the globe, tucked into the bottom right corner — the full
+          256px plaque at mid height collides with the role text on a phone. */}
+      <div className="hero-enter absolute right-5 bottom-[5%] left-auto md:top-[44%] md:right-auto md:bottom-auto md:left-0">
+        <div className="relative flex items-center rounded-r-full md:h-[6.5rem] md:w-[16rem] md:bg-ink md:pl-11">
+          <p className="hidden text-[1.08rem] leading-[1.2] text-paper md:block">
             {site.location.split(" ").slice(0, 1)}
             <br />
-            in the
+            in
             <br />
-            Netherlands
+            Cameroon
           </p>
-          <Globe className="absolute right-[0.95rem] size-[4.55rem]" />
+          <Globe className="size-[6rem] md:absolute md:right-[0.95rem] md:size-[4.55rem]" />
         </div>
       </div>
 
-      {/* Role, right hand side */}
-      <div className="hero-drift absolute inset-x-0 top-[36%]">
+      {/* Role: bottom left on a phone, right hand column from md up. */}
+      <div className="hero-drift absolute inset-x-0 bottom-[6%] md:top-[36%] md:bottom-auto">
         <div className="hero-enter shell grid grid-cols-12">
-          <div className="col-span-12 md:col-span-3 md:col-start-10">
-            <ArrowUpRight className="mb-14 size-4 rotate-90" />
+          <div className="col-span-9 md:col-span-3 md:col-start-10">
+            <ArrowUpRight className="mb-6 size-4 rotate-90 md:mb-14" />
             <h2 className="text-[clamp(1.5rem,2.3vw,2.3rem)] leading-[1.4]">
               {site.role.split(" ")[0]}
               <br />
-              Designer &amp; Developer
+              Software &amp; QA Engineer
             </h2>
           </div>
         </div>
@@ -148,7 +150,7 @@ export function Hero() {
           No overflow-hidden here: the header already clips horizontally, and
           clipping at the line box sliced the descenders off g, p and y. The
           0.25em bottom padding matches the reference's own descender room. */}
-      <div className="hero-drift absolute inset-x-0 bottom-[4%]">
+      <div className="hero-drift absolute inset-x-0 bottom-[26%] md:bottom-[4%]">
         <div className="hero-enter">
           <div className="hero-marquee-track flex w-max pb-[0.25em] will-change-transform">
             {Array.from({ length: 2 }).map((_, i) => (

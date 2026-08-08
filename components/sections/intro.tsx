@@ -15,7 +15,7 @@ export function Intro() {
         />
 
         <div className="flex flex-col items-start gap-10 lg:pt-2">
-          <p className="max-w-md text-body text-ink-soft">
+          <p className="max-w-[14rem] text-body text-ink-soft md:max-w-md">
             The combination of my passion for design, code &amp; interaction
             positions me in a unique place in the web design world.
           </p>

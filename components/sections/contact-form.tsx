@@ -31,7 +31,7 @@ const fields = [
     index: "04",
     name: "service",
     label: "What services are you looking for?",
-    placeholder: "Web Design, Web Development ...",
+    placeholder: "Web Development, Mobile App ...",
     type: "text",
   },
 ] as const;
