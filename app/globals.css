@@ -53,6 +53,34 @@
 
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Second stop of the location globe's colour cycle. The reference pulses
+     between its accent and this red; change it to retune the pulse. */
+  --color-ball-pulse: #ff4444;
+
+  --animate-digital-ball: digital-ball 6s ease-in-out infinite;
+  --animate-globe-wobble: globe-wobble 5.4s ease-in-out infinite;
+}
+
+/* The globe rocks between +15deg and -15deg — it does not spin. */
+@keyframes globe-wobble {
+  0%,
+  100% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-15deg);
+  }
+}
+
+@keyframes digital-ball {
+  0%,
+  100% {
+    background-color: var(--color-accent);
+  }
+  50% {
+    background-color: var(--color-ball-pulse);
+  }
 }
 
 /* ------------------------------------------------------------------ */

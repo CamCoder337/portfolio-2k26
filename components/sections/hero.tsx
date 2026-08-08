@@ -119,7 +119,7 @@ export function Hero() {
       {/* Location plaque. Below md the reference drops the plaque entirely and
           keeps only the globe, tucked into the bottom right corner — the full
           256px plaque at mid height collides with the role text on a phone. */}
-      <div className="hero-enter absolute right-5 bottom-[5%] left-auto md:top-[44%] md:right-auto md:bottom-auto md:left-0">
+      <div className="hero-enter absolute right-4 bottom-6 left-auto md:top-[44%] md:right-auto md:bottom-auto md:left-0">
         <div className="relative flex items-center rounded-r-full md:h-[6.5rem] md:w-[16rem] md:bg-ink md:pl-11">
           <p className="hidden text-[1.08rem] leading-[1.2] text-paper md:block">
             {site.location.split(" ").slice(0, 1)}
@@ -128,14 +128,18 @@ export function Hero() {
             <br />
             Cameroon
           </p>
-          <Globe className="size-[6rem] md:absolute md:right-[0.95rem] md:size-[4.55rem]" />
+          {/* 67px on a phone — the reference's 96px box holds a disc inset by
+              14.4px, not a 96px disc. */}
+          <Globe className="size-[4.2rem] md:absolute md:right-[0.95rem] md:size-[4.55rem]" />
         </div>
       </div>
 
       {/* Role: bottom left on a phone, right hand column from md up. */}
       <div className="hero-drift absolute inset-x-0 bottom-[6%] md:top-[36%] md:bottom-auto">
         <div className="hero-enter shell grid grid-cols-12">
-          <div className="col-span-9 md:col-span-3 md:col-start-10">
+          {/* Four columns, not three: "Software & QA Engineer" is longer than
+              the reference's role line and wrapped onto a third line. */}
+          <div className="col-span-9 md:col-span-4 md:col-start-9">
             <ArrowUpRight className="mb-6 size-4 rotate-90 md:mb-14" />
             <h2 className="text-[clamp(1.5rem,2.3vw,2.3rem)] leading-[1.4]">
               {site.role.split(" ")[0]}
