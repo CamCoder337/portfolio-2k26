@@ -112,7 +112,9 @@
   h4,
   h5 {
     font-weight: 400;
-    text-wrap: balance;
+    /* No text-wrap: balance — the long statement headings are set as running
+       copy on the reference, and balancing pulled them in to 263px of a 350px
+       column on a phone. Line breaks that matter are explicit <br>s. */
   }
 }
 
