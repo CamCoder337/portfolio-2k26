@@ -2,7 +2,7 @@ import { MaskedWords } from "@/components/ui/masked-words";
 import { RoundButton } from "@/components/ui/buttons";
 
 const statement =
-  "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.";
+  "I help product teams ship software that holds up under load. No demos that break in prod architectures that are tested, monitored, and built to scale.";
 
 export function Intro() {
   return (
@@ -16,8 +16,7 @@ export function Intro() {
 
         <div className="flex flex-col items-start gap-10 lg:pt-2">
           <p className="max-w-[14rem] text-body text-ink-soft md:max-w-md">
-            The combination of my passion for design, code &amp; interaction
-            positions me in a unique place in the web design world.
+            The combination of my drive for quality, my passion for backend code & performance optimization positions me at the intersection of development and quality assurance.
           </p>
           <RoundButton href="/about">About me</RoundButton>
         </div>

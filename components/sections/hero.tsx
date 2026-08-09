@@ -100,7 +100,7 @@ export function Hero() {
   return (
     <header
       ref={root}
-      className="relative h-svh overflow-hidden bg-muted text-paper"
+      className="relative h-svh overflow-hidden bg-hero-canvas text-paper"
     >
       {/* The reference does not stretch the portrait across the viewport: the
           image is fitted to the container height and centred, leaving the
@@ -108,7 +108,7 @@ export function Hero() {
           zoom it. Narrow screens still cover, or it would letterbox. */}
       <div className="hero-backdrop absolute inset-x-0 -top-[11.5%] h-[126.5%]">
         <Media
-          src="/media/home/hero.jpg"
+          src="/media/home/hero.png"
           alt=""
           priority
           sizes="100vw"

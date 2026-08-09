@@ -7,6 +7,9 @@ export const site = {
   phoneHref: "tel:+237693926443",
   edition: "2026 © Edition",
   timezone: "Africa/Douala",
+  /* Round portrait set inline in the footer and contact headlines. Swap this
+     one file to change both. */
+  avatar: "/media/home/avatar.png",
 } as const;
 
 export const navLinks = [

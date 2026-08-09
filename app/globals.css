@@ -20,6 +20,12 @@
   --color-accent-light: #d78559;
 
   --color-muted: #999d9e;
+
+  /* Canvas behind the hero portrait. On desktop the image is height-fitted
+     and centred, so this colour is exposed either side of it — it has to be
+     the exact flat colour the photo is cut out onto, or the seam shows.
+     Kept separate from --color-muted, which also drives secondary text. */
+  --color-hero-canvas: #95999D;
   --color-hair: rgba(28, 29, 32, 0.18);
   --color-hair-light: rgba(255, 255, 255, 0.2);
 
