@@ -93,7 +93,7 @@ export function ContactForm() {
               name="message"
               rows={6}
               required
-              placeholder="Hello Dennis, can you help me with ... *"
+              placeholder="Hello Fred, can you help me with ... *"
               className="w-full resize-none bg-transparent text-[clamp(1.5rem,3vw,2.5rem)] text-paper placeholder:text-muted focus:outline-none"
             />
           </div>
