@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: "Contact" };
 export default function ContactPage() {
   return (
     <main className="min-h-svh bg-ink text-paper">
-      <PageHeader lines={["Let's start a", "project together"]} dark />
+      <PageHeader lines={["Let's start a", "project together"]} dark avatar />
 
       <div className="shell pb-[clamp(4rem,9vw,8rem)]">
         <ContactForm />

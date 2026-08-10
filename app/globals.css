@@ -117,6 +117,9 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: var(--text-body);
+    /* The reference sets its Regular face at 450, not 400 — every computed
+       weight measured on it comes back 450. */
+    font-weight: 450;
     line-height: 1.66;
     overscroll-behavior: none;
   }
@@ -145,7 +148,7 @@
   h3,
   h4,
   h5 {
-    font-weight: 400;
+    font-weight: 450;
     /* No text-wrap: balance — the long statement headings are set as running
        copy on the reference, and balancing pulled them in to 263px of a 350px
        column on a phone. Line breaks that matter are explicit <br>s. */
@@ -172,6 +175,11 @@
   vertical-align: top;
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
+  /* Matching room above the line box, so an inline portrait taller than the
+     cap height is not sliced. The hidden state starts below the box, so this
+     extra band stays empty until the reveal lands. */
+  padding-top: 0.22em;
+  margin-top: -0.22em;
 }
 
 /* The curved white lip that folds a light section into the dark one. */

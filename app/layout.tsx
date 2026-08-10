@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { PageTransition } from "@/components/providers/page-transition";
@@ -8,15 +8,29 @@ import { Nav } from "@/components/sections/nav";
 import { MenuProvider } from "@/components/providers/menu";
 
 /**
- * The reference site ships Neue Montreal, which is licensed and cannot be
- * redistributed here. Inter Tight is the closest freely available neo-grotesque:
- * same tight display rhythm, near-identical metrics at large sizes.
+ * Neue Montreal, self-hosted from app/fonts (kept out of public/ so the
+ * licensed files are not served raw at a guessable URL).
+ *
+ * The weight mapping mirrors the reference's own @font-face block, which is
+ * not the usual one: Regular is declared at 450 and Bold at 800, so body copy
+ * and headings sit at 450 rather than 400.
+ *
+ * Self-hosting also removes the build-time fetch to Google Fonts that made
+ * `next build` fail intermittently.
  */
-const display = Inter_Tight({
+const display = localFont({
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
   display: "swap",
+  src: [
+    { path: "./fonts/NeueMontreal-Light.otf", weight: "300", style: "normal" },
+    { path: "./fonts/NeueMontreal-LightItalic.otf", weight: "300", style: "italic" },
+    { path: "./fonts/NeueMontreal-Regular.otf", weight: "450", style: "normal" },
+    { path: "./fonts/NeueMontreal-Italic.otf", weight: "450", style: "italic" },
+    { path: "./fonts/NeueMontreal-Medium.otf", weight: "500", style: "normal" },
+    { path: "./fonts/NeueMontreal-MediumItalic.otf", weight: "500", style: "italic" },
+    { path: "./fonts/NeueMontreal-Bold.otf", weight: "800", style: "normal" },
+    { path: "./fonts/NeueMontreal-BoldItalic.otf", weight: "800", style: "italic" },
+  ],
 });
 
 export const metadata: Metadata = {

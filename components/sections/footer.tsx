@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -42,18 +43,31 @@ export function Footer() {
         <div className="shell">
           <div className="relative flex items-center gap-6">
             <h2 className="flex flex-wrap items-center gap-x-6 gap-y-2 text-title">
-              <span className="inline-block size-[1.1em] rounded-full bg-ink-soft" />
+              {/* 0.85em matches the reference's 75px portrait against its
+                  88.2px headline. */}
+              <Image
+                src={site.avatar}
+                alt=""
+                width={150}
+                height={150}
+                className="size-[0.85em] shrink-0 rounded-full object-cover"
+              />
               <span>Let&rsquo;s work</span>
               <span>together</span>
             </h2>
             <ArrowUpRight className="size-4 shrink-0 rotate-[15deg]" />
           </div>
 
-          <div className="relative mt-10 border-t border-hair-light pt-10">
-            <div className="pointer-events-none absolute -top-[clamp(4rem,7vw,6rem)] right-0 flex justify-end">
-              <div className="pointer-events-auto">
-                <RoundButton href="/contact">Get in touch</RoundButton>
-              </div>
+          {/* Margins clear half the button either side of the rule: the
+              reference leaves 76px above it on a phone and 95px on desktop,
+              against a half-button of 72 and 86.5. Anything tighter and the
+              button lands on the headline. */}
+          <div className="relative mt-[clamp(5.5rem,7vw,6.5rem)] border-t border-hair-light pt-28 md:pt-10">
+            {/* The reference centres this button exactly on the rule — measured
+                dead on at 390px and within half a pixel at 1440px — and insets
+                it from the right edge rather than sitting flush. */}
+            <div className="absolute top-0 right-7 -translate-y-1/2 md:right-[5.4rem]">
+              <RoundButton href="/contact">Get in touch</RoundButton>
             </div>
 
             <div className="flex flex-wrap gap-4">

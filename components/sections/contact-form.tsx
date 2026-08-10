@@ -57,9 +57,15 @@ export function ContactForm() {
     setSent(true);
   };
 
+  /* The bottom padding leaves room for the half of the send button that hangs
+     below the last field's rule. */
   return (
-    <form ref={root} onSubmit={submit} className="mt-[clamp(3rem,8vw,7rem)]">
-      <div className="border-t border-hair-light">
+    <form
+      ref={root}
+      onSubmit={submit}
+      className="mt-[clamp(3rem,8vw,7rem)] pb-[clamp(5.5rem,7vw,6.5rem)]"
+    >
+      <div className="relative border-t border-hair-light">
         {fields.map((field) => (
           <div
             key={field.name}
@@ -98,21 +104,25 @@ export function ContactForm() {
             />
           </div>
         </div>
-      </div>
-
-      <div className="mt-12 flex justify-end">
-        <Magnetic strength={70}>
-          <button
-            type="submit"
-            className="group relative isolate grid aspect-square w-[clamp(9rem,13vw,11.25rem)] place-items-center overflow-hidden rounded-full bg-accent text-paper"
-          >
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 translate-y-full rounded-[50%_50%_0_0] bg-ink-black transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-y-0 group-hover:rounded-none"
-            />
-            <span className="relative text-body">{sent ? "Sent" : "Send it!"}</span>
-          </button>
-        </Magnetic>
+        {/* Straddles the last field's rule, inset from the right — the
+            reference sits its centre 14px above that rule at 390px and 16.5px
+            at 1440px, not below the form as a separate block. */}
+        <div className="absolute right-7 bottom-0 translate-y-[calc(50%-1rem)] md:right-9">
+          <Magnetic strength={70}>
+            <button
+              type="submit"
+              className="group relative isolate grid aspect-square w-[clamp(9rem,13vw,11.25rem)] place-items-center overflow-hidden rounded-full bg-accent text-paper"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 translate-y-full rounded-[50%_50%_0_0] bg-ink-black transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-y-0 group-hover:rounded-none"
+              />
+              <span className="relative text-body">
+                {sent ? "Sent" : "Send it!"}
+              </span>
+            </button>
+          </Magnetic>
+        </div>
       </div>
 
       {sent && (

@@ -61,7 +61,7 @@ export function PageHeader({
                     alt=""
                     width={150}
                     height={150}
-                    className="mr-[0.15em] inline-block size-[0.8em] rounded-full object-cover"
+                    className="mr-[0.15em] inline-block size-[0.9em] rounded-full object-cover"
                   />
                 )}
                 {line}
