@@ -4,17 +4,19 @@ import { WorkGrid } from "@/components/sections/work-grid";
 import { WorkTiles } from "@/components/sections/work-tiles";
 import { CurveLip } from "@/components/ui/curve-lip";
 import { Footer } from "@/components/sections/footer";
-import { projects, projectCount } from "@/lib/site";
+import { getProjects } from "@/lib/work";
 
 export const metadata: Metadata = { title: "Work" };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const projects = await getProjects();
+
   return (
     <main>
       <PageHeader lines={["Creating next level", "digital products"]}>
         <div className="mt-12 flex items-baseline justify-between border-t border-hair pt-4">
           <p className="eyebrow">All projects</p>
-          <p className="eyebrow">{projectCount}</p>
+          <p className="eyebrow">{projects.length}</p>
         </div>
       </PageHeader>
 

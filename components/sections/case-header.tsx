@@ -4,7 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import type { CaseStudy, Project } from "@/lib/site";
+import type { CaseStudy, Project } from "@/lib/work";
 import { Media } from "@/components/ui/media";
 import { PillButton } from "@/components/ui/buttons";
 import { ArrowUpRight } from "@/components/ui/icons";

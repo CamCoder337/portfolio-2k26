@@ -166,6 +166,20 @@
   padding-inline: clamp(1.25rem, 4vw, var(--spacing-gutter));
 }
 
+/* Narrower measure the reference uses on its inner pages: 979px of content at
+   1440 against the home page's 1316, and the same 20px gutter on a phone. */
+@utility shell-narrow {
+  width: 100%;
+  /* Solved against the reference's three measured points: 350px of content at
+     390, 584 at 768 and 979 at 1440. The gutter grows with the viewport up to
+     92px, then the max-width takes over. */
+  max-width: 72.7rem;
+  margin-inline: auto;
+  /* Line through the two measured gutters — 20px at 390 and 92px at 768 —
+     clamped at both ends. A plain vw term overshot to 47px on a phone. */
+  padding-inline: clamp(1.25rem, calc(19.05vw - 54.3px), 5.75rem);
+}
+
 /* Word / line masks used by the reveal animations. The negative margin buys
    room for descenders that `overflow: hidden` would otherwise slice off; the
    hidden state travels 120% so nothing peeks into that extra room. */

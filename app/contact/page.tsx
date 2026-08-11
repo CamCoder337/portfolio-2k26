@@ -11,12 +11,22 @@ export const metadata: Metadata = { title: "Contact" };
 export default function ContactPage() {
   return (
     <main className="min-h-svh bg-ink text-paper">
-      <PageHeader lines={["Let's start a", "project together"]} dark avatar />
+      <PageHeader
+        lines={["Let's start a", "project together"]}
+        dark
+        avatar
+        narrow
+      />
 
-      <div className="shell pb-[clamp(4rem,9vw,8rem)]">
-        <ContactForm />
+      {/* Two columns from md up — the reference keeps a 73/27 split at both
+          768 and 1440, with the details stacked in the right column beside the
+          form, not underneath it. Below md they collapse and move above it. */}
+      <div className="shell-narrow grid gap-12 pb-[clamp(4rem,9vw,8rem)] md:grid-cols-[73%_27%] md:gap-0">
+        <div className="order-2 md:order-none">
+          <ContactForm />
+        </div>
 
-        <div className="mt-[clamp(4rem,9vw,8rem)] grid gap-10 sm:grid-cols-3">
+        <div className="order-1 flex flex-col gap-10 md:order-none md:mt-[clamp(3rem,8vw,7rem)] md:pl-[clamp(2rem,4.5vw,3.5rem)]">
           <div>
             <p className="eyebrow mb-3">Contact details</p>
             <ul className="flex flex-col gap-1">
@@ -58,7 +68,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <FooterMeta className="shell border-t border-hair-light py-10" />
+      <FooterMeta className="shell-narrow border-t border-hair-light py-10" />
     </main>
   );
 }

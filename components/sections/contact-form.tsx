@@ -69,7 +69,7 @@ export function ContactForm() {
         {fields.map((field) => (
           <div
             key={field.name}
-            className="contact-field grid gap-2 border-b border-hair-light py-8 md:grid-cols-[4rem_1fr] md:gap-8"
+            className="contact-field grid grid-cols-[clamp(1.75rem,7.6vw,3.95rem)_1fr] border-b border-hair-light py-8"
           >
             <label htmlFor={`form-${field.name}`} className="eyebrow pt-3">
               {field.index}
@@ -82,13 +82,13 @@ export function ContactForm() {
                 type={field.type}
                 required={field.name !== "company"}
                 placeholder={field.placeholder}
-                className="w-full bg-transparent text-[clamp(1.5rem,3vw,2.5rem)] text-paper placeholder:text-muted focus:outline-none"
+                className="w-full bg-transparent text-[clamp(1.15rem,2.77vw,1.436rem)] text-paper placeholder:text-muted focus:outline-none"
               />
             </div>
           </div>
         ))}
 
-        <div className="contact-field grid gap-2 border-b border-hair-light py-8 md:grid-cols-[4rem_1fr] md:gap-8">
+        <div className="contact-field grid grid-cols-[clamp(1.75rem,7.6vw,3.95rem)_1fr] border-b border-hair-light py-8">
           <label htmlFor="form-message" className="eyebrow pt-3">
             05
           </label>
@@ -100,7 +100,7 @@ export function ContactForm() {
               rows={6}
               required
               placeholder="Hello Fred, can you help me with ... *"
-              className="w-full resize-none bg-transparent text-[clamp(1.5rem,3vw,2.5rem)] text-paper placeholder:text-muted focus:outline-none"
+              className="w-full resize-none bg-transparent text-[clamp(1.15rem,2.77vw,1.436rem)] text-paper placeholder:text-muted focus:outline-none"
             />
           </div>
         </div>

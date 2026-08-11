@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
 import "./globals.css";
+import { SanityLive } from "@/sanity/live";
+import { getProjectLabels } from "@/lib/work";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { PageTransition } from "@/components/providers/page-transition";
 import { Preloader } from "@/components/sections/preloader";
@@ -42,12 +46,14 @@ export const metadata: Metadata = {
     "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const projectLabels = await getProjectLabels();
+
   return (
     <html lang="en" className={`${display.variable} h-full`}>
       <body className="min-h-full">
         <SmoothScroll>
-          <PageTransition>
+          <PageTransition projectLabels={projectLabels}>
             <MenuProvider>
               <Preloader />
               <Nav />
@@ -55,6 +61,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </MenuProvider>
           </PageTransition>
         </SmoothScroll>
+        {/* Required for the Live Content API to push updates. */}
+        <SanityLive />
+        {(await draftMode()).isEnabled && <VisualEditing />}
       </body>
     </html>
   );

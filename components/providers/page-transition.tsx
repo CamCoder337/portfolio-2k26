@@ -13,7 +13,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { lenisStore } from "@/lib/lenis-store";
 import { route } from "@/lib/intro-state";
-import { navLinks, projects } from "@/lib/site";
+import { navLinks } from "@/lib/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,11 +31,15 @@ const NavigateContext = createContext<(href: string) => void>(() => {});
 
 export const useTransitionNavigate = () => useContext(NavigateContext);
 
+/** Slug/title pairs, resolved server-side and handed down — the curtain runs
+ *  on the client and cannot query Sanity itself. */
+export type ProjectLabel = { slug: string; title: string };
+
 /** Human label shown on the curtain while the next route loads. */
-function labelFor(href: string) {
+function labelFor(href: string, projectLabels: ProjectLabel[]) {
   const match = navLinks.find((l) => l.href === href);
   if (match) return match.label;
-  const project = projects.find((p) => `/work/${p.slug}` === href);
+  const project = projectLabels.find((p) => `/work/${p.slug}` === href);
   return project?.title ?? "";
 }
 
@@ -44,7 +48,13 @@ function labelFor(href: string) {
  * leading edge, the router swaps the page underneath, then the panel keeps
  * travelling up and drags its curved trailing edge off-screen.
  */
-export function PageTransition({ children }: { children: React.ReactNode }) {
+export function PageTransition({
+  children,
+  projectLabels,
+}: {
+  children: React.ReactNode;
+  projectLabels: ProjectLabel[];
+}) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -71,7 +81,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
       if (href === pathname || target.current) return;
       target.current = href;
       route.fromTransition = true;
-      setLabelText(labelFor(href));
+      setLabelText(labelFor(href, projectLabels));
       lenisStore.current?.stop();
 
       /* Warm the route now so the push at the end of the cover commits
@@ -95,7 +105,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
         .to(label.current, { autoAlpha: 1, y: 0, duration: 0.4 }, "-=0.4")
         .call(() => router.push(href));
     },
-    [pathname, router],
+    [pathname, router, projectLabels],
   );
 
   /* Reveal once the new route has committed. */

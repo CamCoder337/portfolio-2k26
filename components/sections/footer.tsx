@@ -5,7 +5,8 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { site, socialLinks, projectCount, type Project } from "@/lib/site";
+import { site, socialLinks } from "@/lib/site";
+import type { Project } from "@/lib/work";
 import { ArrowUpRight } from "@/components/ui/icons";
 import { PillButton, RoundButton, UnderlineLink } from "@/components/ui/buttons";
 import { Media } from "@/components/ui/media";
@@ -88,7 +89,13 @@ export function Footer() {
 }
 
 /** Case-study footer: next project teaser plus the index link. */
-export function CaseFooter({ next }: { next: Project }) {
+export function CaseFooter({
+  next,
+  projectCount,
+}: {
+  next: Project;
+  projectCount: number;
+}) {
   return (
     <footer className="relative overflow-hidden bg-ink text-paper">
       <div className="shell pt-[clamp(4rem,9vw,8rem)] pb-12">

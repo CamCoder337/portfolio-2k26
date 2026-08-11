@@ -14,6 +14,8 @@ type PageHeaderProps = {
   dark?: boolean;
   /** Sets the round portrait inline at the start of the first line. */
   avatar?: boolean;
+  /** Uses the reference's narrower inner-page measure. */
+  narrow?: boolean;
   children?: React.ReactNode;
 };
 
@@ -24,6 +26,7 @@ export function PageHeader({
   lines,
   dark = false,
   avatar = false,
+  narrow = false,
   children,
 }: PageHeaderProps) {
   const root = useRef<HTMLElement>(null);
@@ -48,8 +51,11 @@ export function PageHeader({
         dark ? "bg-ink text-paper" : ""
       }`}
     >
-      <div className="shell">
-        <h1 className="text-[clamp(2.75rem,7.5vw,7rem)] leading-[1.02]">
+      <div className={narrow ? "shell-narrow" : "shell"}>
+        {/* 6.125vw with a 2.84rem floor — measured at 45.5px on a 390 phone,
+            47px at 768 and 88.2px at 1440, on /work and /contact alike. The
+            old 7.5vw ran 22% oversized on desktop. */}
+        <h1 className="text-title">
           {lines.map((line, i) => (
             <span key={i} className="mask-line block">
               <span className="page-header-line block translate-y-[120%] will-change-transform">

@@ -1,4 +1,4 @@
-import type { Project } from "@/lib/site";
+import type { Project } from "@/lib/work";
 import { TransitionLink } from "@/components/ui/transition-link";
 import { Media } from "@/components/ui/media";
 
