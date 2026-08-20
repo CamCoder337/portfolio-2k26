@@ -22,16 +22,65 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
-export type CaseMobileGallery = {
-  _type: "caseMobileGallery";
-  images?: Array<{
+export type Seo = {
+  _type: "seo";
+  title?: string;
+  description?: string;
+  image?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
-    _key: string;
-  }>;
+  };
+  noIndex?: boolean;
+};
+
+export type Figure = {
+  _type: "figure";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  caption?: string;
+};
+
+export type Milestone = {
+  _type: "milestone";
+  year?: string;
+  title?: string;
+  body?: string;
+};
+
+export type Passion = {
+  _type: "passion";
+  name?: string;
+  body?: string;
+  trait?: string;
+  image?: Figure;
+};
+
+export type ServiceItem = {
+  _type: "serviceItem";
+  title?: string;
+  body?: string;
+};
+
+export type PracticeItem = {
+  _type: "practiceItem";
+  label?: string;
+  body?: string;
+  tools?: Array<string>;
+};
+
+export type CaseMobileGallery = {
+  _type: "caseMobileGallery";
+  images?: Array<
+    {
+      _key: string;
+    } & Figure
+  >;
 };
 
 export type CaseFullWidth = {
@@ -105,6 +154,8 @@ export type Project = {
   };
   tint?: string;
   order?: number;
+  summary?: string;
+  seo?: Seo;
   caseStudy?: CaseStudy;
 };
 
@@ -128,6 +179,39 @@ export type Slug = {
   _type: "slug";
   current?: string;
   source?: string;
+};
+
+export type About = {
+  _id: string;
+  _type: "about";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  headline?: Array<string>;
+  statement?: string;
+  portrait?: Figure;
+  secondary?: Figure;
+  practice?: Array<
+    {
+      _key: string;
+    } & PracticeItem
+  >;
+  services?: Array<
+    {
+      _key: string;
+    } & ServiceItem
+  >;
+  passions?: Array<
+    {
+      _key: string;
+    } & Passion
+  >;
+  timeline?: Array<
+    {
+      _key: string;
+    } & Milestone
+  >;
+  seo?: Seo;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -229,6 +313,12 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes =
   | SanityImageAssetReference
+  | Seo
+  | Figure
+  | Milestone
+  | Passion
+  | ServiceItem
+  | PracticeItem
   | CaseMobileGallery
   | CaseFullWidth
   | CaseDevice
@@ -237,6 +327,7 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | Slug
+  | About
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -282,15 +373,36 @@ export type PROJECT_SLUGS_QUERY_RESULT = Array<{
 }>;
 
 // Source: ../camcoder-folio/sanity/queries.ts
-// Variable: PROJECT_TITLE_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] { title }
-export type PROJECT_TITLE_QUERY_RESULT = {
+// Variable: PROJECT_META_QUERY
+// Query: *[_type == "project" && slug.current == $slug][0] {    title,    discipline,    year,    thumb,      "seo": {    "title": coalesce(seo.title, title, ""),    "description": coalesce(seo.description, summary, ""),    "image": seo.image,    "noIndex": seo.noIndex == true  }  }
+export type PROJECT_META_QUERY_RESULT = {
   title: string | null;
+  discipline: string | null;
+  year: string | null;
+  thumb: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  seo: {
+    title: string | "";
+    description: string | "";
+    image: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | false;
+  };
 } | null;
 
 // Source: ../camcoder-folio/sanity/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  discipline,  country,  year,  thumb,  tint,    caseStudy {      services,      credits,      liveUrl,      cover,      logo,      stage,      blocks[] {        _key,        _type,        _type == "caseDevice" => { videoUrl, poster, padBottom },        _type == "caseFullWidth" => { videoUrl },        _type == "caseMobileGallery" => { images[] { _key, ... } }      }    }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  discipline,  country,  year,  thumb,  tint,    summary,    caseStudy {      services,      credits,      liveUrl,      cover,      logo,      stage,      blocks[] {        _key,        _type,        _type == "caseDevice" => { videoUrl, poster, padBottom },        _type == "caseFullWidth" => { videoUrl },        _type == "caseMobileGallery" => { images[] { _key, ... } }      }    }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   title: string | null;
@@ -306,6 +418,7 @@ export type PROJECT_QUERY_RESULT = {
     _type: "image";
   } | null;
   tint: string | null;
+  summary: string | null;
   caseStudy: {
     services: string | null;
     credits: string | null;
@@ -349,16 +462,72 @@ export type PROJECT_QUERY_RESULT = {
           _type: "caseMobileGallery";
           images: Array<{
             _key: string;
+            _type: "figure";
             asset?: SanityImageAssetReference;
             media?: unknown;
             hotspot?: SanityImageHotspot;
             crop?: SanityImageCrop;
-            _type: "image";
+            alt?: string;
+            caption?: string;
           }> | null;
         }
     > | null;
   } | null;
 } | null;
+
+// Source: ../camcoder-folio/sanity/queries.ts
+// Variable: ABOUT_QUERY
+// Query: *[_type == "about" && _id == "about"][0] {    headline,    statement,    portrait,    secondary,    practice[] { _key, label, body, tools },    services[] { _key, title, body },    passions[] { _key, name, body, trait, image },    timeline[] { _key, year, title, body },    "seo": {      "title": coalesce(seo.title, ""),      "description": coalesce(seo.description, ""),      "image": seo.image,      "noIndex": seo.noIndex == true    }  }
+export type ABOUT_QUERY_RESULT = {
+  headline: Array<string> | null;
+  statement: string | null;
+  portrait: Figure | null;
+  secondary: Figure | null;
+  practice: Array<{
+    _key: string;
+    label: string | null;
+    body: string | null;
+    tools: Array<string> | null;
+  }> | null;
+  services: Array<{
+    _key: string;
+    title: string | null;
+    body: string | null;
+  }> | null;
+  passions: Array<{
+    _key: string;
+    name: string | null;
+    body: string | null;
+    trait: string | null;
+    image: Figure | null;
+  }> | null;
+  timeline: Array<{
+    _key: string;
+    year: string | null;
+    title: string | null;
+    body: string | null;
+  }> | null;
+  seo: {
+    title: string | "";
+    description: string | "";
+    image: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | false;
+  };
+} | null;
+
+// Source: ../camcoder-folio/sanity/queries.ts
+// Variable: SITEMAP_QUERY
+// Query: *[_type == "project" && defined(slug.current) && seo.noIndex != true] | order(order asc) {    "slug": slug.current,    _updatedAt  }
+export type SITEMAP_QUERY_RESULT = Array<{
+  slug: string | null;
+  _updatedAt: string;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -367,7 +536,9 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && defined(slug.current)] | order(order asc) {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n\n  }\n': PROJECTS_QUERY_RESULT;
     '\n  *[_type == "project" && defined(slug.current)] | order(order asc) {\n    "slug": slug.current,\n    title\n  }\n': PROJECT_LABELS_QUERY_RESULT;
     '\n  *[_type == "project" && defined(slug.current)] { "slug": slug.current }\n': PROJECT_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] { title }\n': PROJECT_TITLE_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n,\n    caseStudy {\n      services,\n      credits,\n      liveUrl,\n      cover,\n      logo,\n      stage,\n      blocks[] {\n        _key,\n        _type,\n        _type == "caseDevice" => { videoUrl, poster, padBottom },\n        _type == "caseFullWidth" => { videoUrl },\n        _type == "caseMobileGallery" => { images[] { _key, ... } }\n      }\n    }\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    title,\n    discipline,\n    year,\n    thumb,\n    \n  "seo": {\n    "title": coalesce(seo.title, title, ""),\n    "description": coalesce(seo.description, summary, ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  }\n\n  }\n': PROJECT_META_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n,\n    summary,\n    caseStudy {\n      services,\n      credits,\n      liveUrl,\n      cover,\n      logo,\n      stage,\n      blocks[] {\n        _key,\n        _type,\n        _type == "caseDevice" => { videoUrl, poster, padBottom },\n        _type == "caseFullWidth" => { videoUrl },\n        _type == "caseMobileGallery" => { images[] { _key, ... } }\n      }\n    }\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "about" && _id == "about"][0] {\n    headline,\n    statement,\n    portrait,\n    secondary,\n    practice[] { _key, label, body, tools },\n    services[] { _key, title, body },\n    passions[] { _key, name, body, trait, image },\n    timeline[] { _key, year, title, body },\n    "seo": {\n      "title": coalesce(seo.title, ""),\n      "description": coalesce(seo.description, ""),\n      "image": seo.image,\n      "noIndex": seo.noIndex == true\n    }\n  }\n': ABOUT_QUERY_RESULT;
+    '\n  *[_type == "project" && defined(slug.current) && seo.noIndex != true] | order(order asc) {\n    "slug": slug.current,\n    _updatedAt\n  }\n': SITEMAP_QUERY_RESULT;
   }
 }

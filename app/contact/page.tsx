@@ -4,13 +4,27 @@ import { ContactForm } from "@/components/sections/contact-form";
 import { UnderlineLink } from "@/components/ui/buttons";
 import { ArrowUpRight } from "@/components/ui/icons";
 import { FooterMeta } from "@/components/sections/footer";
+import { JsonLd } from "@/components/ui/json-ld";
 import { business, site, socialLinks } from "@/lib/site";
+import { breadcrumbSchema } from "@/lib/schema-org";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = {
+  title: "Contact",
+  description: `Start a project with ${site.name}. Freelance software engineering and QA, working remotely from ${site.location}.`,
+  alternates: { canonical: "/contact" },
+  openGraph: { title: "Contact", url: "/contact", type: "website" },
+};
 
 export default function ContactPage() {
   return (
     <main className="min-h-svh bg-ink text-paper">
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
+
       <PageHeader
         lines={["Let's start a", "project together"]}
         dark

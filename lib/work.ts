@@ -11,7 +11,7 @@ import {
   PROJECT_LABELS_QUERY,
   PROJECT_QUERY,
   PROJECT_SLUGS_QUERY,
-  PROJECT_TITLE_QUERY,
+  PROJECT_META_QUERY,
 } from "@/sanity/queries";
 
 /**
@@ -49,7 +49,7 @@ export type CaseBlock =
   | {
       _key: string;
       _type: "caseMobileGallery";
-      images: { _key: string; url: string }[];
+      images: { _key: string; url: string; alt: string }[];
     };
 
 export type CaseStudy = {
@@ -109,17 +109,38 @@ export async function getProjectSlugs() {
   return rows.map((row) => row.slug).filter((slug) => slug !== null);
 }
 
-export async function getProjectTitle(slug: string) {
+/**
+ * Everything `generateMetadata` needs, and nothing more.
+ *
+ * `stega: false` is not optional here: the invisible characters Visual Editing
+ * hides inside strings would end up in the `<title>` and the meta description.
+ */
+export async function getProjectMeta(slug: string) {
   const { data } = await sanityFetch({
-    query: PROJECT_TITLE_QUERY,
+    query: PROJECT_META_QUERY,
     params: { slug },
     stega: false,
   });
-  return data?.title ?? null;
+  if (!data) return null;
+
+  return {
+    title: data.title ?? "",
+    discipline: data.discipline ?? "",
+    year: data.year ?? "",
+    thumb: imageUrl(data.thumb ?? undefined, 1200),
+    seo: {
+      title: data.seo.title || undefined,
+      description: data.seo.description || undefined,
+      image: data.seo.image ? imageUrl(data.seo.image, 1200) : undefined,
+      noIndex: data.seo.noIndex,
+    },
+  };
 }
 
 export type ProjectPage = {
   project: Project;
+  /** One or two sentences about the project, when the editor wrote them. */
+  summary?: string;
   study?: CaseStudy;
   next: Project;
   projectCount: number;
@@ -147,6 +168,7 @@ export async function getProjectPage(
 
   return {
     project,
+    summary: raw.summary ?? undefined,
     study: toCaseStudy(raw.caseStudy),
     next,
     projectCount: projects.length,
@@ -174,11 +196,20 @@ function toCaseStudy(raw: RawCaseStudy | null): CaseStudy | undefined {
 
 function toCaseBlock(raw: RawCaseBlock): CaseBlock | null {
   if (raw._type === "caseMobileGallery") {
+    /* Alt text became required on these when the field moved to `figure`, but
+       screens uploaded before that have none. Falling back to an empty string
+       keeps an older case study rendering; the Studio flags the document so
+       the gap is fixed where the answer is known. */
     const images = (raw.images ?? [])
-      .map((image) => ({ _key: image._key, url: imageUrl(image, 800) }))
+      .map((image) => ({
+        _key: image._key,
+        url: imageUrl(image, 800),
+        alt: image.alt ?? "",
+      }))
       .filter((image) => image.url !== undefined) as {
       _key: string;
       url: string;
+      alt: string;
     }[];
 
     return images.length

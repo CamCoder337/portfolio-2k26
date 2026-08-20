@@ -61,6 +61,7 @@ export function CaseBlocks({ study }: { study: CaseStudy }) {
                   >
                     <Media
                       src={image.url}
+                      alt={image.alt}
                       sizes="(max-width: 768px) 33vw, 25vw"
                     />
                   </div>

@@ -15,9 +15,11 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function CaseHeader({
   project,
+  summary,
   study,
 }: {
   project: Project;
+  summary?: string;
   study?: CaseStudy;
 }) {
   const root = useRef<HTMLElement>(null);
@@ -69,6 +71,15 @@ export function CaseHeader({
             {project.title}
           </span>
         </h1>
+
+        {/* The only prose on a case page. Without it these routes are pure
+            media: nothing for a reader skimming, and nothing for a crawler to
+            index beyond the title. */}
+        {summary && (
+          <p className="case-meta mt-[clamp(2rem,4vw,3rem)] max-w-2xl text-lead text-ink-soft">
+            {summary}
+          </p>
+        )}
 
         <div className="case-meta mt-[clamp(2.5rem,6vw,5rem)] grid gap-8 border-t border-hair pt-8 md:grid-cols-4">
           <div>

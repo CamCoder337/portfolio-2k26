@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import "./globals.css";
 import { SanityLive } from "@/sanity/live";
 import { getProjectLabels } from "@/lib/work";
+import { site } from "@/lib/site";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { PageTransition } from "@/components/providers/page-transition";
 import { Preloader } from "@/components/sections/preloader";
@@ -37,13 +38,48 @@ const display = localFont({
   ],
 });
 
+/**
+ * Site-wide metadata.
+ *
+ * `metadataBase` is what lets every page below write relative URLs for
+ * canonicals and social images; without it, a relative value in a metadata
+ * field fails the build rather than resolving.
+ */
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: {
-    default: "Fred Tchiadeu • Freelance Software & QA Engineer",
-    template: "%s - CamCoder",
+    default: `${site.name} — ${site.role}`,
+    template: `%s — ${site.name}`,
   },
-  description:
-    "Helping brands to stand out in the digital era. Together we will set the new status quo. No nonsense, always on the cutting edge.",
+  description: site.description,
+  applicationName: "CamCoder",
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: "en_US",
+    url: "/",
+    title: `${site.name} — ${site.role}`,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: site.twitterHandle,
+    creator: site.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

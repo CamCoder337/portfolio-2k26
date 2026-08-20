@@ -71,11 +71,24 @@ function Row({
             i >= mobileCount ? "hidden md:block" : ""
           }`}
         >
-          <Media
-            src={item.src}
-            video={item.video}
-            sizes="(max-width: 768px) 50vw, 25vw"
-          />
+          {/* Branched rather than passing `video={item.video}`: the boolean
+              cannot pick a side of the Media union, and the image side has to
+              state its alt. These tiles are a decorative band — the section
+              already carries the accessible name "Selected visuals" — so an
+              empty alt is the right answer, declared rather than defaulted. */}
+          {item.video ? (
+            <Media
+              src={item.src}
+              video
+              sizes="(max-width: 768px) 50vw, 25vw"
+            />
+          ) : (
+            <Media
+              src={item.src}
+              alt=""
+              sizes="(max-width: 768px) 50vw, 25vw"
+            />
+          )}
         </div>
       ))}
     </div>

@@ -1,7 +1,15 @@
 export const site = {
   name: "Fred Tchiadeu",
   role: "Freelance Software & QA Engineer",
-  location: "Located in the Cameroon",
+  /** Production origin. Everything absolute in metadata is built from it. */
+  url: "https://cam-coder.com",
+  /* Shown as the search result description wherever a page sets nothing more
+     specific. Written to say what the work is, not how good it is. */
+  description:
+    "Fred Tchiadeu builds and tests web products from Cameroon. Software engineering and QA in one pair of hands: shipping the feature and proving it holds.",
+  tagline: "Software engineering and QA, from build to proof.",
+  twitterHandle: "@camcoder337",
+  location: "Cameroon",
   email: "fredtchiadeu@gmail.com",
   phone: "+237 693 926 443",
   phoneHref: "tel:+237693926443",
@@ -20,7 +28,6 @@ export const navLinks = [
 ] as const;
 
 export const socialLinks = [
-  // { label: "Awwwards", href: "https://www.awwwards.com/dennissnellenberg/" },
   { label: "Instagram", href: "https://www.instagram.com/camcoder337/" },
   { label: "Twitter", href: "https://twitter.com/camcoder337" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/fredtchiadeu/" },
@@ -28,8 +35,6 @@ export const socialLinks = [
 
 export const business = [
   { label: "CamCoder Studio" },
-  // { label: "CoC: 92411711" },
-  // { label: "VAT: NL866034080B01" },
   { label: "Location: Cameroon" },
 ] as const;
 
@@ -39,23 +44,8 @@ export const business = [
 /*  About                                                              */
 /* ------------------------------------------------------------------ */
 
-export const services = [
-  {
-    index: "01",
-    title: "Design",
-    body: "With a solid track record in designing websites, I deliver strong and user-friendly digital designs. (Since 2024 only in combination with development)",
-  },
-  {
-    index: "02",
-    title: "Development",
-    body: "I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction. Building with Webflow (or Kirby CMS).",
-  },
-  {
-    index: "03",
-    title: "The full package",
-    body: "A complete website from concept to implementation, that's what makes me stand out. My great sense for design and my development skills enable me to create kick-ass projects.",
-  },
-] as const;
+/* Services, the practice list and the passions live in Sanity.
+   See lib/about.ts. */
 
 /* ------------------------------------------------------------------ */
 /*  Home                                                               */

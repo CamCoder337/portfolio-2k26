@@ -122,11 +122,11 @@ export function Hero() {
       <div className="hero-enter absolute right-4 bottom-6 left-auto md:top-[44%] md:right-auto md:bottom-auto md:left-0">
         <div className="relative flex items-center rounded-r-full md:h-[6.5rem] md:w-[16rem] md:bg-ink md:pl-11">
           <p className="hidden text-[1.08rem] leading-[1.2] text-paper md:block">
-            {site.location.split(" ").slice(0, 1)}
+            Located
             <br />
             in
             <br />
-            Cameroon
+            {site.location}
           </p>
           {/* 67px on a phone — the reference's 96px box holds a disc inset by
               14.4px, not a 96px disc. */}
@@ -141,11 +141,15 @@ export function Hero() {
               the reference's role line and wrapped onto a third line. */}
           <div className="col-span-9 md:col-span-4 md:col-start-9">
             <ArrowUpRight className="mb-6 size-4 rotate-90 md:mb-14" />
-            <h2 className="text-[clamp(1.5rem,2.3vw,2.3rem)] leading-[1.4]">
+            {/* The page's only h1. It sits here rather than on the name ticker
+                below because "Freelance Software & QA Engineer" says what the
+                page is about, where a name and an em dash say nothing. Purely
+                a tag swap — the type scale is unchanged. */}
+            <h1 className="text-[clamp(1.5rem,2.3vw,2.3rem)] leading-[1.4]">
               {site.role.split(" ")[0]}
               <br />
               Software &amp; QA Engineer
-            </h2>
+            </h1>
           </div>
         </div>
       </div>
@@ -157,14 +161,19 @@ export function Hero() {
       <div className="hero-drift absolute inset-x-0 bottom-[26%] md:bottom-[4%]">
         <div className="hero-enter">
           <div className="hero-marquee-track flex w-max pb-[0.25em] will-change-transform">
+            {/* Two copies so the loop can wrap seamlessly, which is exactly why
+                these must not be headings: the marquee shipped two identical
+                h1 elements into the HTML. They are typographic, not semantic —
+                the real h1 is the role line above. */}
             {Array.from({ length: 2 }).map((_, i) => (
-              <h1
+              <div
                 key={i}
+                aria-hidden={i === 1}
                 className="flex shrink-0 items-center gap-[0.35em] pr-[0.35em] text-display whitespace-nowrap"
               >
                 <span>{site.name}</span>
                 <span>—</span>
-              </h1>
+              </div>
             ))}
           </div>
         </div>
