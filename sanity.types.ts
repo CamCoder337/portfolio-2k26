@@ -72,13 +72,17 @@ export type CaseStudy = {
     _type: "image";
   };
   stage?: string;
-  blocks?: Array<{
-    _key: string;
-  } & CaseDevice | {
-    _key: string;
-  } & CaseFullWidth | {
-    _key: string;
-  } & CaseMobileGallery>;
+  blocks?: Array<
+    | ({
+        _key: string;
+      } & CaseDevice)
+    | ({
+        _key: string;
+      } & CaseFullWidth)
+    | ({
+        _key: string;
+      } & CaseMobileGallery)
+  >;
 };
 
 export type Project = {
@@ -223,7 +227,24 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImageAssetReference | CaseMobileGallery | CaseFullWidth | CaseDevice | CaseStudy | Project | SanityImageCrop | SanityImageHotspot | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | SanityImageAssetReference
+  | CaseMobileGallery
+  | CaseFullWidth
+  | CaseDevice
+  | CaseStudy
+  | Project
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Slug
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
 
 // Source: ../camcoder-folio/sanity/queries.ts
 // Variable: PROJECTS_QUERY
@@ -304,34 +325,38 @@ export type PROJECT_QUERY_RESULT = {
       _type: "image";
     } | null;
     stage: string | null;
-    blocks: Array<{
-      _key: string;
-      _type: "caseDevice";
-      videoUrl: string | null;
-      poster: {
-        asset?: SanityImageAssetReference;
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
-      } | null;
-      padBottom: boolean | null;
-    } | {
-      _key: string;
-      _type: "caseFullWidth";
-      videoUrl: string | null;
-    } | {
-      _key: string;
-      _type: "caseMobileGallery";
-      images: Array<{
-        _key: string;
-        asset?: SanityImageAssetReference;
-        media?: unknown;
-        hotspot?: SanityImageHotspot;
-        crop?: SanityImageCrop;
-        _type: "image";
-      }> | null;
-    }> | null;
+    blocks: Array<
+      | {
+          _key: string;
+          _type: "caseDevice";
+          videoUrl: string | null;
+          poster: {
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          } | null;
+          padBottom: boolean | null;
+        }
+      | {
+          _key: string;
+          _type: "caseFullWidth";
+          videoUrl: string | null;
+        }
+      | {
+          _key: string;
+          _type: "caseMobileGallery";
+          images: Array<{
+            _key: string;
+            asset?: SanityImageAssetReference;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          }> | null;
+        }
+    > | null;
   } | null;
 } | null;
 
@@ -339,11 +364,10 @@ export type PROJECT_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"project\" && defined(slug.current)] | order(order asc) {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n\n  }\n": PROJECTS_QUERY_RESULT;
-    "\n  *[_type == \"project\" && defined(slug.current)] | order(order asc) {\n    \"slug\": slug.current,\n    title\n  }\n": PROJECT_LABELS_QUERY_RESULT;
-    "\n  *[_type == \"project\" && defined(slug.current)] { \"slug\": slug.current }\n": PROJECT_SLUGS_QUERY_RESULT;
-    "\n  *[_type == \"project\" && slug.current == $slug][0] { title }\n": PROJECT_TITLE_QUERY_RESULT;
-    "\n  *[_type == \"project\" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n,\n    caseStudy {\n      services,\n      credits,\n      liveUrl,\n      cover,\n      logo,\n      stage,\n      blocks[] {\n        _key,\n        _type,\n        _type == \"caseDevice\" => { videoUrl, poster, padBottom },\n        _type == \"caseFullWidth\" => { videoUrl },\n        _type == \"caseMobileGallery\" => { images[] { _key, ... } }\n      }\n    }\n  }\n": PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project" && defined(slug.current)] | order(order asc) {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n\n  }\n': PROJECTS_QUERY_RESULT;
+    '\n  *[_type == "project" && defined(slug.current)] | order(order asc) {\n    "slug": slug.current,\n    title\n  }\n': PROJECT_LABELS_QUERY_RESULT;
+    '\n  *[_type == "project" && defined(slug.current)] { "slug": slug.current }\n': PROJECT_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] { title }\n': PROJECT_TITLE_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n,\n    caseStudy {\n      services,\n      credits,\n      liveUrl,\n      cover,\n      logo,\n      stage,\n      blocks[] {\n        _key,\n        _type,\n        _type == "caseDevice" => { videoUrl, poster, padBottom },\n        _type == "caseFullWidth" => { videoUrl },\n        _type == "caseMobileGallery" => { images[] { _key, ... } }\n      }\n    }\n  }\n': PROJECT_QUERY_RESULT;
   }
 }
-
