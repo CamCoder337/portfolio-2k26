@@ -70,7 +70,12 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
         ])}
       />
 
-      <CaseHeader project={project} summary={page.summary} study={study} />
+      <CaseHeader
+        project={project}
+        summary={page.summary}
+        stack={page.stack}
+        study={study}
+      />
       {study && <CaseBlocks study={study} />}
       <CurveLip />
       <CaseFooter next={next} projectCount={projectCount} />

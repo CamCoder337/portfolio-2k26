@@ -63,6 +63,7 @@ export const PROJECT_QUERY = defineQuery(`
   *[_type == "project" && slug.current == $slug][0] {
     ${projectCard},
     summary,
+    stack,
     caseStudy {
       services,
       credits,

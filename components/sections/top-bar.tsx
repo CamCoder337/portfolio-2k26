@@ -10,19 +10,25 @@ import { useMenu } from "@/components/providers/menu";
  * Credit and inline nav sitting on top of a page header.
  *
  * Rendered *inside* the header, as the last child, and positioned absolutely
- * with `z-index: auto` on purpose:
- *  - a z-index or `position: fixed` would make it a stacking context, and
- *    mix-blend-difference would then blend against an empty backdrop, leaving
- *    the text white and invisible on light pages;
- *  - coming last in DOM order keeps it above sibling absolute layers such as
- *    the hero backdrop, without needing one.
+ * with `z-index: auto` on purpose: coming last in DOM order keeps it above
+ * sibling absolute layers such as the hero backdrop without needing one.
+ *
+ * The colour is themed, not blended. The reference sets the bar to solid white
+ * over its dark headers (home, contact) and to ink over the light ones (work,
+ * about, case studies) — measured at rgb(255,255,255) and rgb(28,29,32), with
+ * `mix-blend-mode: normal` throughout. Blending instead of theming turned the
+ * white text into rgb(106,102,98) against the hero's grey canvas.
  */
-export function TopBar() {
+export function TopBar({ dark = false }: { dark?: boolean }) {
   const { open, toggle } = useMenu();
 
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0">
-      <div className="shell flex items-start justify-between py-8 text-body text-paper mix-blend-difference">
+      <div
+        className={`shell flex items-start justify-between py-8 text-body ${
+          dark ? "text-paper" : "text-ink"
+        }`}
+      >
         <Magnetic strength={16}>
           <TransitionLink
             href="/"

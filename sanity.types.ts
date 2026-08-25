@@ -155,6 +155,7 @@ export type Project = {
   tint?: string;
   order?: number;
   summary?: string;
+  stack?: Array<string>;
   seo?: Seo;
   caseStudy?: CaseStudy;
 };
@@ -402,7 +403,7 @@ export type PROJECT_META_QUERY_RESULT = {
 
 // Source: ../camcoder-folio/sanity/queries.ts
 // Variable: PROJECT_QUERY
-// Query: *[_type == "project" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  discipline,  country,  year,  thumb,  tint,    summary,    caseStudy {      services,      credits,      liveUrl,      cover,      logo,      stage,      blocks[] {        _key,        _type,        _type == "caseDevice" => { videoUrl, poster, padBottom },        _type == "caseFullWidth" => { videoUrl },        _type == "caseMobileGallery" => { images[] { _key, ... } }      }    }  }
+// Query: *[_type == "project" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  discipline,  country,  year,  thumb,  tint,    summary,    stack,    caseStudy {      services,      credits,      liveUrl,      cover,      logo,      stage,      blocks[] {        _key,        _type,        _type == "caseDevice" => { videoUrl, poster, padBottom },        _type == "caseFullWidth" => { videoUrl },        _type == "caseMobileGallery" => { images[] { _key, ... } }      }    }  }
 export type PROJECT_QUERY_RESULT = {
   _id: string;
   title: string | null;
@@ -419,6 +420,7 @@ export type PROJECT_QUERY_RESULT = {
   } | null;
   tint: string | null;
   summary: string | null;
+  stack: Array<string> | null;
   caseStudy: {
     services: string | null;
     credits: string | null;
@@ -537,7 +539,7 @@ declare module "@sanity/client" {
     '\n  *[_type == "project" && defined(slug.current)] | order(order asc) {\n    "slug": slug.current,\n    title\n  }\n': PROJECT_LABELS_QUERY_RESULT;
     '\n  *[_type == "project" && defined(slug.current)] { "slug": slug.current }\n': PROJECT_SLUGS_QUERY_RESULT;
     '\n  *[_type == "project" && slug.current == $slug][0] {\n    title,\n    discipline,\n    year,\n    thumb,\n    \n  "seo": {\n    "title": coalesce(seo.title, title, ""),\n    "description": coalesce(seo.description, summary, ""),\n    "image": seo.image,\n    "noIndex": seo.noIndex == true\n  }\n\n  }\n': PROJECT_META_QUERY_RESULT;
-    '\n  *[_type == "project" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n,\n    summary,\n    caseStudy {\n      services,\n      credits,\n      liveUrl,\n      cover,\n      logo,\n      stage,\n      blocks[] {\n        _key,\n        _type,\n        _type == "caseDevice" => { videoUrl, poster, padBottom },\n        _type == "caseFullWidth" => { videoUrl },\n        _type == "caseMobileGallery" => { images[] { _key, ... } }\n      }\n    }\n  }\n': PROJECT_QUERY_RESULT;
+    '\n  *[_type == "project" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  "slug": slug.current,\n  discipline,\n  country,\n  year,\n  thumb,\n  tint\n,\n    summary,\n    stack,\n    caseStudy {\n      services,\n      credits,\n      liveUrl,\n      cover,\n      logo,\n      stage,\n      blocks[] {\n        _key,\n        _type,\n        _type == "caseDevice" => { videoUrl, poster, padBottom },\n        _type == "caseFullWidth" => { videoUrl },\n        _type == "caseMobileGallery" => { images[] { _key, ... } }\n      }\n    }\n  }\n': PROJECT_QUERY_RESULT;
     '\n  *[_type == "about" && _id == "about"][0] {\n    headline,\n    statement,\n    portrait,\n    secondary,\n    practice[] { _key, label, body, tools },\n    services[] { _key, title, body },\n    passions[] { _key, name, body, trait, image },\n    timeline[] { _key, year, title, body },\n    "seo": {\n      "title": coalesce(seo.title, ""),\n      "description": coalesce(seo.description, ""),\n      "image": seo.image,\n      "noIndex": seo.noIndex == true\n    }\n  }\n': ABOUT_QUERY_RESULT;
     '\n  *[_type == "project" && defined(slug.current) && seo.noIndex != true] | order(order asc) {\n    "slug": slug.current,\n    _updatedAt\n  }\n': SITEMAP_QUERY_RESULT;
   }

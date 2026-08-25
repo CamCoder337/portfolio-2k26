@@ -16,10 +16,12 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 export function CaseHeader({
   project,
   summary,
+  stack,
   study,
 }: {
   project: Project;
   summary?: string;
+  stack: string[];
   study?: CaseStudy;
 }) {
   const root = useRef<HTMLElement>(null);
@@ -109,6 +111,26 @@ export function CaseHeader({
             </div>
           )}
         </div>
+
+        {/* Kept out of the meta grid on purpose: the grid holds one-line
+            facts, and a stack is a list that wraps to two or three rows on a
+            phone. Its own rule keeps the four columns above from collapsing
+            unevenly. */}
+        {stack.length > 0 && (
+          <div className="case-meta mt-8 border-t border-hair pt-8">
+            <p className="eyebrow mb-3">Built with</p>
+            <ul className="flex flex-wrap gap-2">
+              {stack.map((tech) => (
+                <li
+                  key={tech}
+                  className="rounded-full border border-hair px-3 py-1 text-eyebrow text-muted uppercase"
+                >
+                  {tech}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div

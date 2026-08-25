@@ -78,7 +78,7 @@ export function PageHeader({
         {children}
       </div>
 
-      <TopBar />
+      <TopBar dark={dark} />
     </header>
   );
 }

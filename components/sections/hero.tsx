@@ -180,7 +180,7 @@ export function Hero() {
       </div>
 
       {/* Last child so it paints above the absolute backdrop layer. */}
-      <TopBar />
+      <TopBar dark />
     </header>
   );
 }

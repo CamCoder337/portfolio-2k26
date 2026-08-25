@@ -141,6 +141,8 @@ export type ProjectPage = {
   project: Project;
   /** One or two sentences about the project, when the editor wrote them. */
   summary?: string;
+  /** Technologies the project was built with. Empty when none are listed. */
+  stack: string[];
   study?: CaseStudy;
   next: Project;
   projectCount: number;
@@ -169,6 +171,7 @@ export async function getProjectPage(
   return {
     project,
     summary: raw.summary ?? undefined,
+    stack: raw.stack ?? [],
     study: toCaseStudy(raw.caseStudy),
     next,
     projectCount: projects.length,

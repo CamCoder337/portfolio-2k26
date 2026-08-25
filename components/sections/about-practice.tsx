@@ -58,19 +58,19 @@ export function AboutPractice({ items }: { items: PracticeItem[] }) {
         <div className="lg:sticky lg:top-[18vh] lg:self-start">
           <p className="eyebrow mb-6">Day to day</p>
           <h2 className="text-[clamp(2rem,4vw,3.4rem)] leading-[1.05]">
-            Building it,
+            Done is defined
             <br />
-            then proving
+            before a line
             <br />
-            it holds.
+            is written.
           </h2>
           {/* Deliberately not a restatement of the page's opening line above
               the portrait, which already says that one person does both. This
               introduces the list on the right instead. */}
           <p className="mt-8 max-w-sm text-body text-ink-soft">
-            Below is what a week actually contains. The order shifts, but the
-            shape does not: build something, find out how it fails, make that
-            failure impossible.
+            Below is what a project contains when it is mine end to end. The
+            order shifts, but the shape does not: write down what done means,
+            turn that into tests, then build until they pass.
           </p>
 
           <p className="mt-10 flex items-baseline gap-2 text-body text-muted tabular-nums">
