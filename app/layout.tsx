@@ -11,6 +11,7 @@ import { PageTransition } from "@/components/providers/page-transition";
 import { Preloader } from "@/components/sections/preloader";
 import { Nav } from "@/components/sections/nav";
 import { MenuProvider } from "@/components/providers/menu";
+import { Analytics } from "@vercel/analytics/next"
 
 /**
  * Neue Montreal, self-hosted from app/fonts (kept out of public/ so the
@@ -98,6 +99,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           </PageTransition>
         </SmoothScroll>
         {/* Required for the Live Content API to push updates. */}
+        <Analytics/>
         <SanityLive />
         {(await draftMode()).isEnabled && <VisualEditing />}
       </body>
