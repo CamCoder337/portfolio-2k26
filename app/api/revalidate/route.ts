@@ -11,7 +11,7 @@ import { parseBody } from "next-sanity/webhook";
  * build-time snapshot. This is what puts published edits into that snapshot.
  *
  * Set up in Sanity under API → Webhooks:
- *   URL      https://cam-coder.com/api/revalidate
+ *   URL      https://www.cam-coder.com/api/revalidate
  *   Dataset  production
  *   Trigger  Create, Update, Delete
  *   Filter   _type in ["project", "about"]

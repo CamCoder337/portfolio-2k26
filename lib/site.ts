@@ -1,8 +1,14 @@
 export const site = {
   name: "Fred Tchiadeu",
   role: "Freelance Software & QA Engineer",
-  /** Production origin. Everything absolute in metadata is built from it. */
-  url: "https://cam-coder.com",
+  /**
+   * Production origin. Everything absolute in metadata is built from it.
+   *
+   * The `www` host is the one Vercel actually serves; the apex redirects to
+   * it. This has to match, or every canonical points at a URL that redirects
+   * and the browser's own origin stops matching the Sanity CORS allowlist.
+   */
+  url: "https://www.cam-coder.com",
   /* Shown as the search result description wherever a page sets nothing more
      specific. Written to say what the work is, not how good it is. */
   description:
