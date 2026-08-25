@@ -27,7 +27,7 @@ export function ogCard({
   eyebrow,
   title,
   subtitle,
-  footer = site.url.replace("https://", ""),
+  footer = site.domain,
 }: {
   eyebrow: string;
   title: string;

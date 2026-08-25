@@ -7,7 +7,7 @@ export const contentType = ogContentType;
 
 export default async function Image() {
   return ogCard({
-    eyebrow: site.url.replace("https://", ""),
+    eyebrow: site.domain,
     title: site.name,
     subtitle: site.role,
     footer: site.tagline,
