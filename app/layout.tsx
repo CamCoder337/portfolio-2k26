@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SanityLive } from "@/sanity/live";
 import { getProjectLabels } from "@/lib/work";
@@ -100,6 +101,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         {/* Required for the Live Content API to push updates. */}
         <SanityLive />
         {(await draftMode()).isEnabled && <VisualEditing />}
+        <Analytics />
       </body>
     </html>
   );
