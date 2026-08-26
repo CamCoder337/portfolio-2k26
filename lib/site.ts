@@ -44,7 +44,8 @@ export const navLinks = [
 export const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/camcoder337/" },
   { label: "Twitter", href: "https://twitter.com/camcoder337" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/fredtchiadeu/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/fred-tchiadeu-67a97a24b/" },
+  { label: "GitHub", href: "https://github.com/camcoder337/" },
 ] as const;
 
 export const business = [

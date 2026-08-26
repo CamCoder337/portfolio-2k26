@@ -7,6 +7,7 @@ import { FooterMeta } from "@/components/sections/footer";
 import { JsonLd } from "@/components/ui/json-ld";
 import { business, site, socialLinks } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/schema-org";
+import { getResumeUrl } from "@/lib/resume";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
   openGraph: { title: "Contact", url: "/contact", type: "website" },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const resumeUrl = await getResumeUrl();
+
   return (
     <main className="min-h-svh bg-ink text-paper">
       <JsonLd
@@ -54,6 +57,15 @@ export default function ContactPage() {
               </li>
             </ul>
           </div>
+
+          {resumeUrl && (
+            <div>
+              <p className="eyebrow mb-3">CV</p>
+              <UnderlineLink href={resumeUrl} download>
+                Download CV (PDF)
+              </UnderlineLink>
+            </div>
+          )}
 
           <div>
             <p className="eyebrow mb-3">Business details</p>

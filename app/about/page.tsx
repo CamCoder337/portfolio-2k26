@@ -12,6 +12,7 @@ import { AboutPassions } from "@/components/sections/about-passions";
 import { AboutTimeline } from "@/components/sections/about-timeline";
 import { JsonLd } from "@/components/ui/json-ld";
 import { getProfile, getProfileMeta } from "@/lib/about";
+import { getResumeUrl } from "@/lib/resume";
 import { breadcrumbSchema, personSchema } from "@/lib/schema-org";
 import { site } from "@/lib/site";
 
@@ -34,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const profile = await getProfile();
+  const [profile, resumeUrl] = await Promise.all([getProfile(), getResumeUrl()]);
   if (!profile) notFound();
 
   return (
@@ -95,7 +96,7 @@ export default async function AboutPage() {
       <AboutTimeline items={profile.timeline} />
 
       <CurveLip />
-      <Footer />
+      <Footer resumeUrl={resumeUrl} />
     </main>
   );
 }

@@ -108,6 +108,18 @@ export const ABOUT_QUERY = defineQuery(`
   }
 `);
 
+/**
+ * The CV file, as a bare CDN URL.
+ *
+ * Split out of `ABOUT_QUERY` because the home and contact pages want the
+ * download button without reading the rest of the About document.
+ */
+export const RESUME_QUERY = defineQuery(`
+  *[_type == "about" && _id == "about"][0] {
+    "resume": resume.asset->url
+  }
+`);
+
 /** Slugs and edit times for the sitemap. Pages hidden from search drop out. */
 export const SITEMAP_QUERY = defineQuery(`
   *[_type == "project" && defined(slug.current) && seo.noIndex != true] | order(order asc) {

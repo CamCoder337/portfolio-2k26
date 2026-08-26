@@ -7,6 +7,8 @@ type Common = {
   href: string;
   children: React.ReactNode;
   external?: boolean;
+  /** Saves the target instead of navigating to it. */
+  download?: boolean;
 };
 
 type AnchorProps = Common &
@@ -18,8 +20,15 @@ type AnchorProps = Common &
   };
 
 function Anchor({ href, external, className, children, ref, ...rest }: AnchorProps) {
+  /* TransitionLink drives the route curtain, so it only ever gets an in-app
+     path. Anything that leaves the app — another origin, a mail client, the
+     dialler — has to be a plain anchor or the curtain runs over a navigation
+     that never happens. */
   const isPlainAnchor =
-    external || href.startsWith("mailto:") || href.startsWith("tel:");
+    external ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:") ||
+    href.startsWith("http");
 
   if (isPlainAnchor) {
     return (
@@ -50,6 +59,7 @@ export function PillButton({
   href,
   children,
   external,
+  download,
   count,
   dark = false,
 }: Common & { count?: number; dark?: boolean }) {
@@ -58,6 +68,7 @@ export function PillButton({
       <Anchor
         href={href}
         external={external}
+        download={download}
         className={`group relative isolate inline-flex items-center gap-2 overflow-hidden rounded-full border px-[1.6em] py-[0.7em] text-body transition-colors duration-300 ${
           dark
             ? "border-hair-light text-paper"
@@ -107,6 +118,7 @@ export function UnderlineLink({
   href,
   children,
   external,
+  download,
   className = "",
 }: Common & { className?: string }) {
   return (
@@ -114,6 +126,7 @@ export function UnderlineLink({
       <Anchor
         href={href}
         external={external}
+        download={download}
         className={`group relative inline-block ${className}`}
       >
         <span className="relative">
