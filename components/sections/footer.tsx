@@ -14,8 +14,14 @@ import { TransitionLink } from "@/components/ui/transition-link";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-/** Default footer: the "Let's work together" call to action. */
-export function Footer() {
+/**
+ * Default footer: the "Let's work together" call to action.
+ *
+ * `resumeUrl` is resolved by the page rather than here: this is a client
+ * component, so it cannot read Sanity itself. Left out, the CV button simply
+ * does not render.
+ */
+export function Footer({ resumeUrl }: { resumeUrl?: string }) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -78,6 +84,11 @@ export function Footer() {
               <PillButton href={site.phoneHref} dark>
                 {site.phone}
               </PillButton>
+              {resumeUrl && (
+                <PillButton href={resumeUrl} download dark>
+                  Download CV
+                </PillButton>
+              )}
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { CurveLip } from "@/components/ui/curve-lip";
 import { Footer } from "@/components/sections/footer";
 import { JsonLd } from "@/components/ui/json-ld";
 import { getProjects } from "@/lib/work";
+import { getResumeUrl } from "@/lib/resume";
 import { personSchema, websiteSchema } from "@/lib/schema-org";
 import { site } from "@/lib/site";
 
@@ -20,7 +21,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const projects = await getProjects();
+  const [projects, resumeUrl] = await Promise.all([
+    getProjects(),
+    getResumeUrl(),
+  ]);
   const featured = projects.slice(0, 4);
 
   return (
@@ -35,7 +39,7 @@ export default async function Home() {
       <MoreWork projectCount={projects.length} />
       <Showcase />
       <CurveLip />
-      <Footer />
+      <Footer resumeUrl={resumeUrl} />
     </main>
   );
 }
